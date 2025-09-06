@@ -91,7 +91,7 @@ const Navbar = () => {
   // };
   const checkLoginStatus = () => {
     const token = localStorage.getItem('accessToken');
-    console.log('Navbar checking token:', token); // NEW
+    // console.log('Navbar checking token:', token); // NEW
     console.log('Is logged in will be:', !!token); // NEW
     setIsLoggedIn(!!token);
   };

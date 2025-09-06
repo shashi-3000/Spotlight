@@ -15,6 +15,11 @@ const movieSchema = new mongoose.Schema(
         type: String,
       },
     ],
+    tmdbId: {
+      type: Number,
+      unique: true,
+      sparse: true // allows null values
+    },
     releaseDate: {
       type: Date,
     },

@@ -55,24 +55,24 @@
 // };
 
 
-const API_BASE_URL = 'http://localhost:5000/api';
+// const API_BASE_URL = 'http://localhost:5000/api';
 
-export const authAPI = {
-  login: async (credentials) => {
-    const response = await fetch(`${API_BASE_URL}/users/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(credentials),
-    });
+// export const authAPI = {
+//   login: async (credentials) => {
+//     const response = await fetch(`${API_BASE_URL}/users/login`, {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(credentials),
+//     });
 
-    const data = await response.json();
+//     const data = await response.json();
     
-    if (!response.ok) {
-      throw new Error(data.message || 'Login failed');
-    }
+//     if (!response.ok) {
+//       throw new Error(data.message || 'Login failed');
+//     }
     
-    return data;
-  }
-};
+//     return data;
+//   }
+// };
