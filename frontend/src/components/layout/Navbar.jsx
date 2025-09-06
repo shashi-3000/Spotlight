@@ -84,11 +84,6 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
-  // Function to check login status
-  // const checkLoginStatus = () => {
-  //   const token = localStorage.getItem('accessToken');
-  //   setIsLoggedIn(!!token);
-  // };
   const checkLoginStatus = () => {
     const token = localStorage.getItem('accessToken');
     // console.log('Navbar checking token:', token); // NEW

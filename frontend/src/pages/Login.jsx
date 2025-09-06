@@ -88,16 +88,6 @@ const Login = () => {
     setLoading(true);
     setError("");
 
-    // try {
-    //   const response = await authAPI.login(formData);
-    //   console.log("Login successful:", response);
-      
-    //   // Just store token in localStorage for now
-    //   localStorage.setItem('accessToken', response.data.accessToken);
-      
-    //   // Navigate to home
-    //   navigate("/");
-    // } 
     try {
       const response = await authAPI.login(formData);
       console.log("Login successful:", response);
