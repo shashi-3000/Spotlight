@@ -71,3 +71,20 @@ export const getActionMovies = async () => {
     return [];
   }
 };
+
+// Simple function to get fantasy movies
+export const getFantasyMovies = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=14`);
+    const data = await response.json();
+    
+    return data.results.map(movie => ({
+      id: movie.id,
+      title: movie.title,
+      poster: movie.poster_path ? `${IMAGE_URL}${movie.poster_path}` : null,
+    }));
+  } catch (error) {
+    console.error('Error fetching fantasy movies:', error);
+    return [];
+  }
+};

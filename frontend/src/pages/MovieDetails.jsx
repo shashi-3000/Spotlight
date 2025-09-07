@@ -70,13 +70,14 @@ import { useState, useEffect } from 'react';
 import MovieCard from "../components/movies/MovieCard.jsx";
 import oscarBg from "../assets/img.jpg";
 import MovieCarousel from "../components/movies/MovieCarousel.jsx";
-import { getTrendingMovies, getPopularMovies, getTopRatedMovies, getActionMovies } from '../services/tmdb.js';
+import { getTrendingMovies, getPopularMovies, getTopRatedMovies, getActionMovies, getFantasyMovies } from '../services/tmdb.js';
 
 export default function MoviePage() {
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [popularMovies, setPopularMovies] = useState([]);
   const [topRatedMovies, setTopRatedMovies] = useState([]);
   const [actionMovies, setActionMovies] = useState([]);
+  const [fantasyMovies, setFantasyMovies] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -91,11 +92,14 @@ export default function MoviePage() {
       const popular = await getPopularMovies();
       const topRated = await getTopRatedMovies();
       const action = await getActionMovies();
+      const fantasy = await getFantasyMovies();
 
       setTrendingMovies(trending.slice(0, 10)); // Show only 10 movies
-      setPopularMovies(popular.slice(0, 10));
-      setTopRatedMovies(topRated.slice(0, 10));
-      setActionMovies(action.slice(0, 10));
+      setPopularMovies(popular.slice(0, 20));
+      setTopRatedMovies(topRated.slice(0, 20));
+      setActionMovies(action.slice(0, 20));
+      setFantasyMovies(fantasy.slice(0, 20));
+      
     } catch (error) {
       console.error('Error loading movies:', error);
       alert('Failed to load movies. Check your API key and internet connection.');
@@ -130,6 +134,7 @@ export default function MoviePage() {
         <MovieCarousel title="⭐ Popular Movies" movies={popularMovies} />
         <MovieCarousel title="🏆 Top Rated" movies={topRatedMovies} />
         <MovieCarousel title="🎬 Action Movies" movies={actionMovies} />
+        <MovieCarousel title="🎬 Fantasy Movies" movies={fantasyMovies} />
       </div>
     </div>
   );

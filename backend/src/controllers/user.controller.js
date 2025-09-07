@@ -114,6 +114,7 @@ const loginUser = asyncHandler(async(req,res)=>{
 
 })
 
+//logout
 const logoutUser = asyncHandler(async(req,res)=>{
     //remove cookies
     //reset refresh tokens
@@ -156,6 +157,29 @@ const getProfile = asyncHandler(async (req, res) => {
     )
   );
 });
+
+
+
+
+const deleteAccount = asyncHandler(async (req, res) => {
+  console.log("Delete account request received");
+  
+  const userId = req.user._id;
+  
+  const deletedUser = await User.findByIdAndDelete(userId);
+  
+  if (!deletedUser) {
+    throw new ApiError(500, "Failed to delete account");
+  }
+  
+  console.log("Account deleted successfully");
+  
+  return res.status(200).json(
+    new ApiResponse(200, {}, "Account deleted successfully")
+  );
+});
+
+
 
 
 
@@ -208,4 +232,4 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
   }
 });
 
-export { registerUser, loginUser, logoutUser ,getProfile, refreshAccessToken };
+export { registerUser, loginUser, logoutUser ,getProfile, refreshAccessToken, deleteAccount };
