@@ -39,7 +39,8 @@ export default function MovieCarousel({ title, movies }) {
       >
         {movies.map((movie, index) => (
           <div key={movie.id || index} className="flex-shrink-0">
-            <MovieCard title={movie.title} poster={movie.poster} />
+            {/* <MovieCard title={movie.title} poster={movie.poster} /> */}
+            <MovieCard title={movie.title} poster={movie.poster} movie={movie} />
           </div>
         ))}
       </div>
