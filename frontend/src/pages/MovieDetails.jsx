@@ -66,13 +66,94 @@
 // }
 
 
-import { useState, useEffect } from 'react';
-import MovieCard from "../components/movies/MovieCard.jsx";
+// import { useState, useEffect } from 'react';
+// import MovieCard from "../components/movies/MovieCard.jsx";
+// import oscarBg from "../assets/img.jpg";
+// import MovieCarousel from "../components/movies/MovieCarousel.jsx";
+// import { getTrendingMovies, getPopularMovies, getTopRatedMovies, getActionMovies, getFantasyMovies } from '../services/tmdb.js';
+
+// export default function MoviePage() {
+//   const [trendingMovies, setTrendingMovies] = useState([]);
+//   const [popularMovies, setPopularMovies] = useState([]);
+//   const [topRatedMovies, setTopRatedMovies] = useState([]);
+//   const [actionMovies, setActionMovies] = useState([]);
+//   const [fantasyMovies, setFantasyMovies] = useState([]);
+//   const [loading, setLoading] = useState(true);
+
+//   useEffect(() => {
+//     loadMovies();
+//   }, []);
+
+//   const loadMovies = async () => {
+//     setLoading(true);
+//     try {
+//       // Get all movie categories
+//       const trending = await getTrendingMovies();
+//       const popular = await getPopularMovies();
+//       const topRated = await getTopRatedMovies();
+//       const action = await getActionMovies();
+//       const fantasy = await getFantasyMovies();
+
+//       setTrendingMovies(trending.slice(0, 10)); // Show only 10 movies
+//       setPopularMovies(popular.slice(0, 20));
+//       setTopRatedMovies(topRated.slice(0, 20));
+//       setActionMovies(action.slice(0, 20));
+//       setFantasyMovies(fantasy.slice(0, 20));
+      
+//     } catch (error) {
+//       console.error('Error loading movies:', error);
+//       alert('Failed to load movies. Check your API key and internet connection.');
+//     }
+//     setLoading(false);
+//   };
+
+//   if (loading) {
+//     return (
+//       <div className="mx-auto py-12 px-6 text-white pt-28 p-10 min-h-screen flex items-center justify-center" 
+//            style={{ backgroundImage: `url(${oscarBg})`, backgroundSize: 'cover', backgroundAttachment: 'fixed' }}>
+//         <div className="bg-black/65 p-10 rounded-md text-center">
+//           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+//           <p className="text-lg">Loading movies...</p>
+//         </div>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div className="mx-auto py-12 px-6 text-white pt-28 p-10 min-h-screen" 
+//          style={{ backgroundImage: `url(${oscarBg})`, backgroundSize: 'cover', backgroundAttachment: 'fixed' }}>
+      
+//       <div className="inset-10 bg-black/65 p-10 rounded-md">
+//         <div className="text-center mb-8">
+//           <h1 className="text-4xl font-bold mb-2">🎬 SPOTLIGHT</h1>
+//           <p className="text-lg text-gray-300">Discover amazing movies from TMDB</p>
+//         </div>
+
+//         {/* Movie Carousels */}
+//         <MovieCarousel title="🔥 Trending Movies" movies={trendingMovies} />
+//         <MovieCarousel title="⭐ Popular Movies" movies={popularMovies} />
+//         <MovieCarousel title="🏆 Top Rated" movies={topRatedMovies} />
+//         <MovieCarousel title="🎬 Action Movies" movies={actionMovies} />
+//         <MovieCarousel title="🎬 Fantasy Movies" movies={fantasyMovies} />
+//       </div>
+//     </div>
+//   );
+// }
+
+
+import { useState, useEffect } from "react";
 import oscarBg from "../assets/img.jpg";
 import MovieCarousel from "../components/movies/MovieCarousel.jsx";
-import { getTrendingMovies, getPopularMovies, getTopRatedMovies, getActionMovies, getFantasyMovies } from '../services/tmdb.js';
+import MovieSearch from "../components/movies/MovieSearch.jsx";
+import { 
+  getTrendingMovies, 
+  getPopularMovies, 
+  getTopRatedMovies, 
+  getActionMovies, 
+  getFantasyMovies 
+} from "../services/tmdb.js";
 
-export default function MoviePage() {
+export default function Movies() {
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [popularMovies, setPopularMovies] = useState([]);
   const [topRatedMovies, setTopRatedMovies] = useState([]);
@@ -85,62 +166,96 @@ export default function MoviePage() {
   }, []);
 
   const loadMovies = async () => {
-    setLoading(true);
     try {
-      // Get all movie categories
-      const trending = await getTrendingMovies();
-      const popular = await getPopularMovies();
-      const topRated = await getTopRatedMovies();
-      const action = await getActionMovies();
-      const fantasy = await getFantasyMovies();
-
-      setTrendingMovies(trending.slice(0, 10)); // Show only 10 movies
-      setPopularMovies(popular.slice(0, 20));
-      setTopRatedMovies(topRated.slice(0, 20));
-      setActionMovies(action.slice(0, 20));
-      setFantasyMovies(fantasy.slice(0, 20));
+      console.log("Loading movies from TMDB...");
       
+      const [trending, popular, topRated, action, fantasy] = await Promise.all([
+        getTrendingMovies(),
+        getPopularMovies(), 
+        getTopRatedMovies(),
+        getActionMovies(),
+        getFantasyMovies()
+      ]);
+
+      setTrendingMovies(trending);
+      setPopularMovies(popular);
+      setTopRatedMovies(topRated);
+      setActionMovies(action);
+      setFantasyMovies(fantasy);
+
     } catch (error) {
-      console.error('Error loading movies:', error);
-      alert('Failed to load movies. Check your API key and internet connection.');
+      console.error("Error loading movies:", error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   if (loading) {
     return (
-      <div className="mx-auto py-12 px-6 text-white pt-28 p-10 min-h-screen flex items-center justify-center" 
-           style={{ backgroundImage: `url(${oscarBg})`, backgroundSize: 'cover', backgroundAttachment: 'fixed' }}>
-        <div className="bg-black/65 p-10 rounded-md text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-          <p className="text-lg">Loading movies...</p>
+      <div className="min-h-screen bg-black text-white pt-24 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-400 mx-auto mb-4"></div>
+          <p className="text-xl">Loading movies...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto py-12 px-6 text-white pt-28 p-10 min-h-screen" 
-         style={{ backgroundImage: `url(${oscarBg})`, backgroundSize: 'cover', backgroundAttachment: 'fixed' }}>
-      
-      <div className="inset-10 bg-black/65 p-10 rounded-md">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-2">🎬 SPOTLIGHT</h1>
-          <p className="text-lg text-gray-300">Discover amazing movies from TMDB</p>
+    <div className="min-h-screen text-white pt-24 px-6 py-12"
+    style={{ backgroundImage: `url(${oscarBg})`, backgroundSize: 'cover', backgroundAttachment: 'fixed' }}>
+      <div className=" inset-10 bg-black/70 p-10 rounded-md">
+        
+        {/* Page Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-bold text-yellow-400 mb-4">Discover Movies</h1>
+          <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+            Explore amazing movies from TMDB. Like, save, and build your personal collection.
+          </p>
         </div>
 
+        {/* Search Section */}
+        <MovieSearch />
+
         {/* Movie Carousels */}
-        <MovieCarousel title="🔥 Trending Movies" movies={trendingMovies} />
-        <MovieCarousel title="⭐ Popular Movies" movies={popularMovies} />
-        <MovieCarousel title="🏆 Top Rated" movies={topRatedMovies} />
-        <MovieCarousel title="🎬 Action Movies" movies={actionMovies} />
-        <MovieCarousel title="🎬 Fantasy Movies" movies={fantasyMovies} />
+        <div className="space-y-8">
+          {trendingMovies.length > 0 && (
+            <MovieCarousel title="🔥 Trending Movies" movies={trendingMovies} />
+          )}
+          
+          {popularMovies.length > 0 && (
+            <MovieCarousel title="⭐ Popular Movies" movies={popularMovies} />
+          )}
+          
+          {topRatedMovies.length > 0 && (
+            <MovieCarousel title="🏆 Top Rated Movies" movies={topRatedMovies} />
+          )}
+          
+          {actionMovies.length > 0 && (
+            <MovieCarousel title="💥 Action Movies" movies={actionMovies} />
+          )}
+          
+          {fantasyMovies.length > 0 && (
+            <MovieCarousel title="🧙‍♂️ Fantasy Movies" movies={fantasyMovies} />
+          )}
+        </div>
+
+        {/* No Movies Message */}
+        {!loading && trendingMovies.length === 0 && popularMovies.length === 0 && (
+          <div className="text-center py-20">
+            <p className="text-gray-400 text-xl">Unable to load movies at the moment</p>
+            <button 
+              onClick={loadMovies}
+              className="mt-4 bg-yellow-400 text-black px-6 py-3 rounded-lg hover:bg-yellow-500 transition-colors"
+            >
+              Retry
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
 }
-
-
 
 
 
