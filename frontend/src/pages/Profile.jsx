@@ -283,6 +283,7 @@
 import { useState, useEffect } from 'react';
 import { userAPI, tokenUtils } from '../services/api';
 import ProfileMovieCard from "../components/movies/ProfileMovieCard.jsx";
+import oscarBg from "../assets/sky.jpg";
 
 export default function Profile() {
   const [user, setUser] = useState(null);
@@ -436,8 +437,9 @@ export default function Profile() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-tr from-black via-slate-900 to-black text-white pt-24 px-6 py-12">
-      <div className="max-w-5xl mx-auto space-y-12">
+    <div className="min-h-screen bg-gradient-to-tr from-black via-slate-900 to-black text-white pt-24 px-6 py-12"
+    style={{ backgroundImage: `url(${oscarBg})`, backgroundSize: 'cover', backgroundAttachment: 'fixed' }}>
+      <div className="inset-10 bg-black/60 p-10 rounded-md">
         
         {/* User Info */}
         <section className="flex items-center space-x-6">

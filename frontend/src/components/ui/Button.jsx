@@ -1,15 +1,4 @@
-// import React from 'react'
 
-// function Button() {
-//   return (
-//     <div>Button</div>
-//   )
-// }
-
-// export default Button
-
-
-// src/components/Button.jsx
 const Button = ({ children, onClick, className = "" }) => {
   return (
     <button
