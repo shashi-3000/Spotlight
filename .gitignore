@@ -1,5 +1,21 @@
+# /backend/node_modules/
+# # /frontend/node_modules/
+# /backend/.env
+# /recommendation-system/tmdb_5000_movies.csv
+# /recommendation-system/tmdb_5000_creadits.csv
+# /recommendation-system/similarity.pkl
+
 /backend/node_modules/
-# /frontend/node_modules/
+
+# Environment variables
 /backend/.env
-/recommendation-system/tmdb_5000_movies.csv
-/recommendation-system/tmdb_5000_creadits.csv
+.env
+
+# Large data and model files from the recommendation service
+# This is where the CSV and PKL rules belong
+/recommendation-service/*.csv
+/recommendation-service/*.pkl
+
+# IDE and OS files
+.vscode/
+.DS_Store
